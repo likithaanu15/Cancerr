@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Cancer Database</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Brain Cancer Database</h1>
+    </header>
+    <main>
+        <div class="tabs">
+            <button class="tab-button active" data-tab="about">About</button>
+            <button class="tab-button" data-tab="search">Search</button>
+            <button class="tab-button" data-tab="features">Features</button>
+			 <button class="tab-button" data-tab="ADMET Properties"> ADMET Properties</button>
+			  <button class="tab-button" data-tab="SOPMA Analysis">SOPMA Analysis</button>
+        </div>
+        
+     <div class="tab-content active" id="about">
+    <h3 class="text-primary">Understanding Brain Cancer</h3>
+    <section class="intro-section">
+        <p>
+            Brain cancer is a complex and challenging disease that occurs when abnormal cells grow uncontrollably within the brain. 
+            These abnormal cells form tumors, which can disrupt brain functions such as memory, motor skills, and emotions. 
+            Brain cancer cacn be either primary, originating in the brain itself, or secondary, when cancer from other parts of the body spreads to the brain. 
+            Despite its rarity, brain cancer remains one of the most devastating forms of cancer due to its impact on the central nervous system.
+        </p>
+    </section>
+    <section class="highlighted-facts">
+        <h3 class="text-secondary">Key Insights</h3>
+        <div class="facts-container">
+            <div class="fact">
+                <h4>What Is Brain Cancer?</h4>
+                <p>
+                    Brain cancer refers to malignant tumors that arise from abnormal cell growth in the brain. These tumors can affect brain functions such as movement, cognition, and vision.
+                </p>
+            </div>
+            <div class="fact">
+                <h4>Symptoms</h4>
+                <p>
+                    Common symptoms of brain cancer include persistent headaches, vision problems, nausea, seizures, memory loss, and changes in personality.
+                </p>
+            </div>
+            <div class="fact">
+                <h4>Types of Brain Cancer</h4>
+                <p>
+                    Brain cancers are categorized based on their cell type and location. Gliomas, meningiomas, and metastases are some of the most common types of brain tumors.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="treatment-section">
+        <h3>Treatment and Prognosis</h3>
+        <p>
+            Treatments for brain cancer typically involve surgery, radiation therapy, and chemotherapy. In recent years, targeted therapies and immunotherapies have shown promise in treating brain tumors. However, treatment efficacy varies greatly depending on the tumor type, size, and location. Early detection is key to improving survival rates, but outcomes remain uncertain for many patients.
+        </p>
+    </section>
+    <section class="image-section">
+        <h3>Visualizing Brain Cancer</h3>
+        <p>Below is a visual representation of a brain affected by cancer. This image highlights the areas of the brain where tumors commonly form, aiding in understanding their impact on brain functions.</p>
+       <img src="{{ url_for('static', filename='images/img.jpg') }}">
+    </section>
+    <section class="mission-section">
+        <h3>Our Vision</h3>
+        <p>
+            The <strong>Brain Cancer Research Foundation</strong> is dedicated to advancing research into the causes, treatments, and cures for brain cancer. By providing crucial data and supporting innovative studies, we aim to improve early detection, treatment strategies, and ultimately, survival rates for patients battling this devastating disease.
+        </p>
+    </section>
+</div>
+<div class="tab-content" id="search">       
+<div class="container mt-5">
+        <h3 class="text-center">Search Gene Names</h3>
+        <form method="POST">
+            <div class="form-group position-relative">
+                <label for="gene_name">Gene Name:</label>
+                <input type="text" class="form-control" id="gene_name" name="gene_name" placeholder="Enter gene name" value="{{ gene_name }}">
+                <div id="suggestion-box" class="suggestion-box" style="display: none;"></div>
+            </div>
+            <center><button type="submit" class="btn btn-primary">Search</button></center>
+        </form>
+
+        <center><button id="clear-input" class="btn btn-danger" style="margin-top: 10px;"> Clear</button></center>
+
+        <div class="mt-4">
+            <h3>Search Results:</h3>
+            <div class="table-container">
+                {% if tables %}
+                    {% for table in tables %}
+                        {{ table|safe }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+   </div>
+</div>
+  <div class="tab-content" id="features">
+    <h3>Key Features of the Dataset</h3>
+    <div class="feature-container">
+        <div class="feature-item">
+            <h4><strong>Comprehensive Protein Information:</strong></h4>
+            <p>Detailed names and gene associations for 50 proteins linked to brain cancer.</p>
+        </div>
+        <div class="feature-item">
+            <h4><strong>Organism-Specific Data:</strong></h4>
+            <p>All proteins are derived from <em>Homo sapiens</em> (Human).</p>
+        </div>
+        <div class="feature-item">
+            <h4><strong>Sequence Lengths:</strong></h4>
+            <p>Protein lengths range from 465 to 1255 amino acids, providing structural diversity.</p>
+        </div>
+        <div class="feature-item">
+            <h4><strong>Subcellular Localization:</strong></h4>
+            <p>Insights into where these proteins function, including nucleus, cytoplasm, membrane, and more.</p>
+        </div>
+        <div class="feature-item">
+            <h4><strong>Post-Translational Modifications:</strong></h4>
+            <p>Information on phosphorylation, acetylation, glycosylation, and other modifications, crucial for understanding protein activity regulation.</p>
+        </div>
+        <div class="feature-item">
+            <h4><strong>Mutagenesis Data:</strong></h4>
+            <p>Indicates proteins with known mutagenesis studies, helping researchers understand the effects of specific mutations.</p>
+        </div>
+        <div class="feature-item">
+            <h4><strong>Protein Domains:</strong></h4>
+            <p>Details on functional domains available for most proteins, aiding in structural and functional analysis.</p>
+        </div>
+        <div class="feature-item">
+            <h4><strong>Structural Insights:</strong></h4>
+            <p>Links to 3D structures and sequence information via UniProt for in-depth research.</p>
+        </div>
+        <div class="feature-item">
+            <h4><strong>Mass and Size:</strong></h4>
+            <p>Proteins range from 51,641 to 137,910 Daltons, highlighting molecular diversity and providing clues about protein stability and function.</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="tab-content active" id="ADMET Properties">
+
+    <title>ADMET Properties</title>
+    <style>
+       
+        .container {
+            max-width: 600px;
+           
+            padding: 20px;
+            border-radius: 10px;
+            
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+           
+         
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+       
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+        }
+    </style>
+
+
+
+
+<div class="container">
+    <h2>ADMET Properties Calculator</h2>
+    <input type="text" id="compound" placeholder="Enter Compound Name or SMILES">
+    <button onclick="calculateADMET()">Calculate</button>
+
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Absorption</td>
+            <td id="absorption">-</td>
+        </tr>
+        <tr>
+            <td>Distribution</td>
+            <td id="distribution">-</td>
+        </tr>
+        <tr>
+            <td>Metabolism</td>
+            <td id="metabolism">-</td>
+        </tr>
+        <tr>
+            <td>Excretion</td>
+            <td id="excretion">-</td>
+        </tr>
+        <tr>
+            <td>Toxicity</td>
+            <td id="toxicity">-</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    function calculateADMET() {
+        let compound = document.getElementById("compound").value;
+        if (!compound) {
+            alert("Please enter a compound name or SMILES notation.");
+            return;
+        }
+
+        // Dummy data (Replace with API call or real calculations)
+        document.getElementById("absorption").innerText = "High";
+        document.getElementById("distribution").innerText = "Moderate";
+        document.getElementById("metabolism").innerText = "Fast";
+        document.getElementById("excretion").innerText = "Slow";
+        document.getElementById("toxicity").innerText = "Low";
+    }
+</script>
+
+</div>
+
+<div class="tab-content active" id="SOPMA Analysis">
+	
+	
+   
+    <title>SOPMA Protein Secondary Structure Prediction</title>
+    <style>
+        
+        #results {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .sequence {
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .chart {
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+         
+          
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <h1>SOPMA Protein Secondary Structure Prediction</h1>
+
+    <label for="proteinSequence">Enter Protein Sequence:</label><br>
+    <textarea id="proteinSequence" rows="5" cols="60">
+MALWMRLLPLLALLALWGPDPAAAFVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAEDLQVGQVELGGGPGAGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN
+    </textarea><br><br>
+
+    <button class="button" onclick="predictStructure()">Predict Structure</button>
+
+    <div id="results" style="display: none;">
+        <h2>Prediction Results</h2>
+        <p><strong>Sequence:</strong> <span class="sequence" id="displayedSequence"></span></p>
+        <p><strong>Sequence Length:</strong> <span id="sequenceLength"></span></p>
+
+        <h3>SOPMA Results:</h3>
+        <div id="sopmaResults"></div>
+
+        <div class="chart">
+            <canvas id="structureChart"></canvas>
+        </div>
+
+        <div id="chartLegend"></div> 
+
+        <img id="outputImage" src="" alt="SOPMA Output Image" style="max-width: 800px; margin-top: 20px;">
+    </div>
+
+    <script>
+        function predictStructure() {
+            const sequence = document.getElementById('proteinSequence').value;
+            const sopmaOutput = getSopmaResults(sequence);
+            displayResults(sopmaOutput);
+        }
+
+        function getSopmaResults(sequence) {
+            // Simulate SOPMA response based on sequence (replace with actual backend call)
+            return {
+                alphaHelix: 37,
+                betaSheet: 9,
+                coil: 64,
+                turn: 0,
+                total: 110,
+                imageData: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAHkCAYAAAA...", // Example image
+            };
+        }
+
+        function displayResults(sopmaOutput) {
+            document.getElementById('results').style.display = 'block';
+
+            // Display sequence and length
+            document.getElementById('displayedSequence').textContent = document.getElementById('proteinSequence').value;
+            document.getElementById('sequenceLength').textContent = document.getElementById('proteinSequence').value.length;
+
+            // Display SOPMA results
+            const percentages = calculatePercentages(sopmaOutput);
+            displaySopmaResults(percentages);
+
+            // Display chart
+            displayChart(percentages);
+
+            // Display image
+            document.getElementById('outputImage').src = sopmaOutput.imageData;
+        }
+
+        function calculatePercentages(sopmaOutput) {
+            return {
+                AlphaHelix: (sopmaOutput.alphaHelix / sopmaOutput.total) * 100,
+                BetaSheet: (sopmaOutput.betaSheet / sopmaOutput.total) * 100,
+                Coil: (sopmaOutput.coil / sopmaOutput.total) * 100,
+                Turn: (sopmaOutput.turn / sopmaOutput.total) * 100,
+            };
+        }
+
+        function displaySopmaResults(percentages) {
+            const sopmaDiv = document.getElementById('sopmaResults');
+            sopmaDiv.innerHTML = "";  // Clear previous results
+
+            for (const [key, value] of Object.entries(percentages)) {
+                sopmaDiv.innerHTML += `${key}: ${value.toFixed(2)}%<br>`;
+            }
+        }
+
+        function displayChart(percentages) {
+            const ctx = document.getElementById('structureChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(percentages),
+                    datasets: [{
+                        label: 'Percentage of Structure',
+                        data: Object.values(percentages),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+
+</div>
+
+<div class="tab-content active" id="Calculate GC Content">
+    <style>
+       
+        input[type="file"] {
+            padding: 10px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+           
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        
+        #gcContentResults {
+            margin-top: 20px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+
+    <h1>GC Content Calculator from FASTA File</h1>
+    <p>Upload a FASTA file to calculate the GC content:</p>
+
+    <input type="file" id="fastaFile" accept=".fasta, .fa">
+    <button onclick="calculateGCContent()">Calculate GC Content</button>
+
+    <div id="gcContentResults"></div>
+
+    <script>
+        function calculateGCContent() {
+            const fileInput = document.getElementById('fastaFile');
+            const file = fileInput.files[0];
+
+            // Validate file selection
+            if (!file) {
+                document.getElementById("gcContentResults").innerHTML = "<span class='error'>Please upload a FASTA file.</span>";
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const fastaData = event.target.result;
+                const sequence = extractSequence(fastaData);
+                if (sequence) {
+                    const gcContent = calculateGC(sequence);
+                    document.getElementById("gcContentResults").innerHTML = GC Content: ${gcContent.toFixed(2)}%;
+                } else {
+                    document.getElementById("gcContentResults").innerHTML = "<span class='error'>Invalid FASTA format or empty sequence.</span>";
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
+        function extractSequence(fastaData) {
+            // Remove all headers (lines starting with '>') and join the sequence lines
+            const lines = fastaData.split('\n');
+            const sequenceLines = lines.filter(line => !line.startsWith('>')).join('');
+            return sequenceLines.toUpperCase().replace(/[^ATGC]/g, ''); // Only valid bases
+        }
+
+        function calculateGC(sequence) {
+            const gcCount = (sequence.match(/[GC]/g) || []).length;
+            const atCount = (sequence.match(/[AT]/g) || []).length;
+            const totalBases = gcCount + atCount;
+
+            if (totalBases === 0) return 0; // Avoid division by zero if the sequence is empty or invalid
+            return (gcCount / totalBases) * 100;
+        }
+</script>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.0.3/3Dmol-min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</main>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script> 
+</body>
+</html>
